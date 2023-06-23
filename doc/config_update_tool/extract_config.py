@@ -22,13 +22,13 @@ if not xdg_data_dir:
 
 
 
-root = xdg_data_dir + "/plasma/plasmoids"
+root = f"{xdg_data_dir}/plasma/plasmoids"
 
 plasmoids = os.listdir(root)
 plasmoids.sort()
+configPath = "/contents/config/main.xml"
 for plasmoid in plasmoids:
-    configPath = "/contents/config/main.xml"
-    path  = root + "/" + plasmoid + configPath
+    path = f"{root}/" + plasmoid + configPath
     try:
         dom = xml.dom.minidom.parse(path).documentElement
 

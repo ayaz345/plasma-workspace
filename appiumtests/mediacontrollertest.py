@@ -445,9 +445,10 @@ class MediaControllerTests(unittest.TestCase):
         """
         Opens the widget and initialize the webdriver
         """
-        desired_caps: dict[str, Any] = {}
-        desired_caps["app"] = "plasmawindowed -p org.kde.plasma.nano org.kde.plasma.mediacontroller"
-        desired_caps["timeouts"] = {'implicit': 5000}
+        desired_caps: dict[str, Any] = {
+            "app": "plasmawindowed -p org.kde.plasma.nano org.kde.plasma.mediacontroller",
+            "timeouts": {'implicit': 5000},
+        }
         cls.driver = webdriver.Remote(command_executor='http://127.0.0.1:4723', desired_capabilities=desired_caps)
         cls.driver.implicitly_wait = 10
 

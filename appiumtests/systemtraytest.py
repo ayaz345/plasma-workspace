@@ -76,9 +76,10 @@ class SystemTrayTests(unittest.TestCase):
         """
         Opens the widget and initialize the webdriver
         """
-        desired_caps: dict[str, Any] = {}
-        desired_caps["app"] = "plasmawindowed -p org.kde.plasma.nano org.kde.plasma.systemtray"
-        desired_caps["timeouts"] = {'implicit': 10000}
+        desired_caps: dict[str, Any] = {
+            "app": "plasmawindowed -p org.kde.plasma.nano org.kde.plasma.systemtray",
+            "timeouts": {'implicit': 10000},
+        }
         cls.driver = webdriver.Remote(command_executor='http://127.0.0.1:4723', desired_capabilities=desired_caps)
         cls.driver.implicitly_wait = 10
 
@@ -90,7 +91,7 @@ class SystemTrayTests(unittest.TestCase):
             out, err = proc.communicate()
             if 'boolean true' in str(out):
                 break
-            print(f"waiting for kded to appear on the dbus session")
+            print("waiting for kded to appear on the dbus session")
             time.sleep(1)
         Popen(['dbus-send', '--print-reply', '--dest=org.kde.kded5', '/kded', 'org.kde.kded5.loadModule', 'string:statusnotifierwatcher'])
 
@@ -135,7 +136,9 @@ class SystemTrayTests(unittest.TestCase):
         except TimeoutException:
             xembedsniproxy.terminate()
             xembed_tray_icon.quit()
-            self.fail("Cannot find the XEmbed icon in the system tray: {}".format(xembedsniproxy.stderr.readlines()))
+            self.fail(
+                f"Cannot find the XEmbed icon in the system tray: {xembedsniproxy.stderr.readlines()}"
+            )
 
         # Now test clickable
         xembed_icon_item.click()
